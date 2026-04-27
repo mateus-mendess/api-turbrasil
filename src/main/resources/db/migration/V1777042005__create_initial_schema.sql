@@ -41,7 +41,10 @@ CREATE TABLE tourist_points(
     updated_at TIMESTAMP,
 
     user_id uuid NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    address_id uuid UNIQUE NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
 CREATE TABLE tourist_point_categories(
@@ -83,9 +86,9 @@ CREATE TABLE comments(
     id uuid PRIMARY KEY,
     content TEXT NOT NULL,
     note SMALLINT NOT NULL CHECK (note BETWEEN 1 AND 5),
+    author_name VARCHAR(100),
     created_at TIMESTAMP NOT NULL,
 
-    author_name VARCHAR(100),
     tourist_point_id uuid NOT NULL,
     user_id uuid,
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -35,22 +36,18 @@ public class TouristPoint {
     private String accessibilityInfo;
 
     @Column(name = "has_accessibility")
-    private Boolean hasAccessibility;
-
-    private Double latitude;
-
-    private Double longitude;
+    private Boolean hasAccessibility = false;
 
     private Boolean active = true;
 
     @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
     private Instant updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToMany(mappedBy = "touristPoints")
@@ -59,13 +56,9 @@ public class TouristPoint {
     @OneToMany(mappedBy = "touristPoint")
     private Set<Photo> photos = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @OneToOne(mappedBy = "touristPoint", cascade = CascadeType.ALL)
     private Address address;
 
     @OneToMany(mappedBy = "touristPoint")
     private Set<Comment> comments = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<User> users = new ArrayList<>();
 }

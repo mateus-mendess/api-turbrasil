@@ -1,8 +1,3 @@
-CREATE TABLE roles(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(20) UNIQUE NOT NULL
-);
-
 CREATE TABLE users(
     id uuid PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -10,10 +5,7 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP,
-
-    roles_id INT NOT NULL,
-    FOREIGN KEY (roles_id) REFERENCES roles(id)
+    updated_at TIMESTAMP
 );
 
 CREATE TABLE categories(
@@ -34,17 +26,12 @@ CREATE TABLE tourist_points(
     close_time TIME,
     accessibility_info TEXT,
     has_accessibility BOOLEAN NOT NULL DEFAULT FALSE,
-    latitude NUMERIC(9, 6) NOT NULL,
-    longitude NUMERIC(9, 6) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
 
     user_id uuid NOT NULL,
-    address_id uuid UNIQUE NOT NULL,
-
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (address_id) REFERENCES addresses(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE tourist_point_categories(
@@ -76,6 +63,8 @@ CREATE TABLE addresses(
     city VARCHAR(60) NOT NULL,
     state CHAR(2) NOT NULL,
     zip_code VARCHAR(9) NOT NULL,
+    latitude NUMERIC(9, 6) NOT NULL,
+    longitude NUMERIC(9, 6) NOT NULL,
     created_at TIMESTAMP NOT NULL,
 
     tourist_point_id uuid NOT NULL,

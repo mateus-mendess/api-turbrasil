@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -35,9 +36,14 @@ public class Address {
     @Column(name = "zip_code")
     private String zipCode;
 
+    private BigDecimal latitude;
+
+    private BigDecimal longitude;
+
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne
+    @JoinColumn(name = "tourist_point_id")
     private TouristPoint touristPoint;
 }

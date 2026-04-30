@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -31,14 +32,10 @@ public class User {
     private Boolean active = true;
 
     @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
     private Instant updatedAt;
-
-    @ManyToOne
-    @JoinColumn(name = "roles_id", nullable = false)
-    private Roles roles;
 
     @OneToMany(mappedBy = "user")
     private Set<Category> categories = new HashSet<>();

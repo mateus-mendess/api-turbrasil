@@ -1,6 +1,7 @@
 package com.br.turbrasil.service;
 
 import com.br.turbrasil.dto.request.UserRequest;
+import com.br.turbrasil.dto.response.UserResponse;
 import com.br.turbrasil.exception.EmailAlreadyExistsException;
 import com.br.turbrasil.mapper.UserMapper;
 import com.br.turbrasil.model.entity.User;
@@ -16,14 +17,14 @@ public class UserService {
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public void save(UserRequest request) {
+    public UserResponse save(UserRequest request) {
         validate(request.email());
 
         User user = userMapper.toUser(request);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepository.save(user);
+        return userMapper.toResponse(userRepository.save(user));
     }
 
     private void validate(String email) {

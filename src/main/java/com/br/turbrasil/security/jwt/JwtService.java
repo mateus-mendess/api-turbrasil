@@ -22,7 +22,7 @@ public class JwtService {
         Instant active = Instant.now();
         Long expired = 10800L;
 
-        UserAuthentication userAuthentication = (UserAuthentication) authentication;
+        UserAuthentication userAuthentication = (UserAuthentication) authentication.getPrincipal();
 
         String scopes = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

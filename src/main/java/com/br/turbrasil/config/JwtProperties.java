@@ -4,14 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
-    private RSAPrivateKey privateKey;
+    private String privateKeyBase64;
 
-    private RSAPublicKey publicKey;
+    private String publicKeyBase64;
 }
